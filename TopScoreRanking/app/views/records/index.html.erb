@@ -1,0 +1,58 @@
+<h1>PLAYERS</h1>
+
+<script type="text/javascript">
+  function createRequest() {
+
+      var jsonRequest = '{"players":{"name":"'+document.getElementById("txtname").value+'", "score":'+document.getElementById("txtscore").value+', "time":"'+document.getElementById("txttime").value +'"  }}';
+      //var jsonRequest = JSON.parse('{"players":{"name":'+document.getElementById(txtname)+', "score":'+document.getElementById(txtscore)+', "time":'+document.getElementById(txttime) +'  }}');
+      let xhr = new XMLHttpRequest();
+      xhr.open('POST', 'http://localhost:3000/create');
+      xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+      xhr.send(JSON.stringify(jsonRequest));
+  }
+
+</script>
+
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Score</th>
+    <th>Time</th>
+    <th>Created Time</th>
+    <th>Updated Time</th>
+    <th>Action</th>
+  </tr>
+  <% @players.each do |player| %>
+    <tr>
+      <th><%= player.id%></th>
+      <th><%= player.name%></th>
+      <th><%= player.score%></th>
+      <th><%= player.time_entry%></th>
+      <th><%= player.created_at%></th>
+      <th><%= player.updated_at%></th>
+      <th><button id="<%=player.id %>">Search</button><button id="<%=player.id %>">Delete</button></th>
+    </tr>
+  <% end %>
+</table>
+
+<div>
+  <div>
+    <label for="txtname">Name</label>
+    <input type="text" id="txtname"/>
+  </div>
+  <div>
+    <label for="txtscore">Score</label>
+    <input type="text" id="txtscore"/>
+  </div>
+  <div>
+    <label for="txttime">Time</label>
+    <input type="text" id="txttime"/>
+  </div>
+  <div>
+    <button id="jsonify" onclick="createRequest()">Create JSON</button>
+  </div>
+</div>
+<div>
+  <textarea id="txtarea_request" ></textarea>
+</div>
