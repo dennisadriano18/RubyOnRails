@@ -4,6 +4,7 @@ Ruby
 SQLite3
 Node.js
 Yarn
+Rails
 
 SETUP INSTRUCTIONS
 1. Create a local copy of the git respository [https://github.com/dennisadriano18/RubyOnRails.git]
@@ -12,6 +13,7 @@ SETUP INSTRUCTIONS
    a.) bundle install 
    b.) rails generate model player_record name:string score:integer time_entry:datetime
    c.) rails db:migrate
+4. In the [TopScoreRanking] directory, type [rails server]. This should start up the default server 
    
 SUPPORTED OPERATIONS - [This API accepts json requests and responds in json format.]
 1. ADD PLAYERS
