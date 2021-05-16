@@ -1,6 +1,7 @@
 class RecordsController < ApplicationController
 
   protect_from_forgery
+
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   def record_not_found(error)
@@ -8,11 +9,16 @@ class RecordsController < ApplicationController
   end
 
   def index
-    @players = Player.all
+    @players = PlayerRecord.all
+  end
+
+  def view
+    @players = PlayerRecord.all
   end
 
   def create
-    @player = Player.new(name: params[:player], score: params[:score], time_entry: params[:time_entry])
+    @player = PlayerRecord.new(name: params[:name], score: params[:score], time_entry: params[:time].to_s.to_datetime)
+
     if @player.save
       render json: { message: 'Player record added' }
     else
@@ -20,20 +26,11 @@ class RecordsController < ApplicationController
     end
   end
 
-  def test
-    @name = params[:score]
-    #@player = Player.new(name: "player4", score: 5, time: "2021/05/13-13:05")
-    respond_to do |format|
-      msg = { :response => @name }
-      format.json  { render :json => msg } # don't do msg.to_json
-    end
-  end
-
   def read
-    @player = Player.all
+    @player = PlayerRecord.all
     msg = ""
     if params[:id].present?
-      @player = @player.find(params[:id])
+      @player = @player.where("id = ?", params[:id])
     else
       if params[:playerlist].present?
         @player = @player.where("lower(name) IN (?)", params[:playerlist].map(&:downcase))
@@ -44,7 +41,7 @@ class RecordsController < ApplicationController
       if params[:end_date].present?
         @player = @player.where("time_entry <= :end_date", {end_date: params[:end_date].to_datetime})
       end
-      if params[:summary]==true
+      if params[:summary].to_s=="true"
         top = @player.maximum("score")
         low = @player.minimum("score")
         average = @player.average("score").to_i
@@ -54,7 +51,7 @@ class RecordsController < ApplicationController
     end
     if msg.empty?
       if params[:current].present?
-        @player = @player.select("id", "name", "score", "time_entry").page(params[:current]).per(5)
+        @player = @player.select("id", "name", "score", "time_entry").page(params[:current].to_i).per(5)
       else
         @player = @player.select("id", "name", "score", "time_entry")
       end
@@ -66,9 +63,9 @@ class RecordsController < ApplicationController
   end
 
   def delete
-    @player = Player.find(params[:id])
+    @player = PlayerRecord.find(params[:id])
     @player.destroy
     render json: { message: 'Player record deleted', status: :success }
   end
-
+  skip_before_action :verify_authenticity_token
 end

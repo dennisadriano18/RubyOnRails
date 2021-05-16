@@ -1,0 +1,22 @@
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Score</th>
+    <th>Time</th>
+    <th>Created Time</th>
+    <th>Updated Time</th>
+    <th>Action</th>
+  </tr>
+  <% @players.each do |player| %>
+    <tr>
+      <th><%= player.id%></th>
+      <th><%= player.name%></th>
+      <th><%= player.score%></th>
+      <th><%= player.time_entry%></th>
+      <th><%= player.created_at%></th>
+      <th><%= player.updated_at%></th>
+      <th><button id="<%=player.id %>">Search</button><button id="<%=player.id %>">Delete</button></th>
+    </tr>
+  <% end %>
+</table>

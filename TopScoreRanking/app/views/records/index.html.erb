@@ -1,58 +1,78 @@
-<h1>PLAYERS</h1>
-
 <script type="text/javascript">
-  function createRequest() {
 
-      var jsonRequest = '{"players":{"name":"'+document.getElementById("txtname").value+'", "score":'+document.getElementById("txtscore").value+', "time":"'+document.getElementById("txttime").value +'"  }}';
-      //var jsonRequest = JSON.parse('{"players":{"name":'+document.getElementById(txtname)+', "score":'+document.getElementById(txtscore)+', "time":'+document.getElementById(txttime) +'  }}');
-      let xhr = new XMLHttpRequest();
-      xhr.open('POST', 'http://localhost:3000/create');
-      xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-      xhr.send(JSON.stringify(jsonRequest));
+  function fncreate() {
+      var jsonRequest = $('#request_create').val();
+      var obj = JSON.parse(jsonRequest);
+      $.post({
+          url: "/create",
+          type: "POST",
+          data: { score:obj.score, name: obj.name, time: obj.time},
+          dataType:"json",
+          success: function(data) {
+              $('#response_create').val(JSON.stringify(data));
+          },
+          error: function(jqXHR, textStatus, errorThrown){
+              $('#response_create').val(textStatus + ": "+ errorThrown);
+          }
+      });
+  }
+
+  function fndelete() {
+      var jsonRequest = $('#request_delete').val();
+      var obj = JSON.parse(jsonRequest);
+      alert(obj.id)
+      $.post({
+          url: "/delete",
+          type: "POST",
+          data: { id: obj.id},
+          dataType:"json",
+          success: function(data) {
+              $('#response_delete').val(JSON.stringify(data));
+          },
+          error: function(jqXHR, textStatus, errorThrown){
+              $('#response_delete').val(textStatus + ": "+ errorThrown);
+          }
+
+      });
+  }
+
+  function fnread() {
+      var jsonRequest = $('#request_read').val();
+      var obj = JSON.parse(jsonRequest);
+      $.post({
+          url: "/read",
+          type: "POST",
+          data: { id: obj.id, start_date: obj.start_date, end_date: obj.end_date, playerlist:obj.playerlist, summary: obj.summary, current: obj.current},
+          dataType:"json",
+          success: function(data) {
+              $('#response_read').val(JSON.stringify(data));
+          },
+          error: function(jqXHR, textStatus, errorThrown){
+              $('#response_read').val(textStatus + ": "+ errorThrown);
+          }
+      });
   }
 
 </script>
 
-<table>
-  <tr>
-    <th>ID</th>
-    <th>Name</th>
-    <th>Score</th>
-    <th>Time</th>
-    <th>Created Time</th>
-    <th>Updated Time</th>
-    <th>Action</th>
-  </tr>
-  <% @players.each do |player| %>
-    <tr>
-      <th><%= player.id%></th>
-      <th><%= player.name%></th>
-      <th><%= player.score%></th>
-      <th><%= player.time_entry%></th>
-      <th><%= player.created_at%></th>
-      <th><%= player.updated_at%></th>
-      <th><button id="<%=player.id %>">Search</button><button id="<%=player.id %>">Delete</button></th>
-    </tr>
-  <% end %>
-</table>
-
+<h1>CREATE PLAYERS</h1>
 <div>
-  <div>
-    <label for="txtname">Name</label>
-    <input type="text" id="txtname"/>
-  </div>
-  <div>
-    <label for="txtscore">Score</label>
-    <input type="text" id="txtscore"/>
-  </div>
-  <div>
-    <label for="txttime">Time</label>
-    <input type="text" id="txttime"/>
-  </div>
-  <div>
-    <button id="jsonify" onclick="createRequest()">Create JSON</button>
-  </div>
+  <textarea rows="4" cols="50" id="request_create" >{ "score":22, "name": "postman", "time": "2021-05-15 10:45 PM"}</textarea>
+  <button id="create" onclick="fncreate()">Create</button>
+  <textarea rows="4" cols="50" id="response_create" ></textarea>
 </div>
+
+<h1>DELETE PLAYERS</h1>
 <div>
-  <textarea id="txtarea_request" ></textarea>
+  <textarea rows="4" cols="50" id="request_delete" >{"id": 10}</textarea>
+  <button id="delete" onclick="fndelete()">Delete</button>
+  <textarea rows="4" cols="50" id="response_delete" ></textarea>
+</div>
+
+<h1>READ PLAYERS</h1>
+<div>
+  <textarea rows="4" cols="50" id="request_read" >{"id": 40, "start_date": "2021-05-15 22:45:00", "end_date": "2021-05-17 22:45:00", "playerlist": ["javascript2", "me"],
+"summary": false, "current":1}</textarea>
+  <button id="read" onclick="fnread()">Search</button>
+  <textarea rows="4" cols="50" id="response_read" ></textarea>
 </div>
