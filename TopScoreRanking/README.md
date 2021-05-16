@@ -1,10 +1,10 @@
 # README
 PREREQUISITES
-Ruby
-SQLite3
-Node.js
-Yarn
-Rails
+1. Ruby
+2. SQLite3
+3. Node.js
+4. Yarn
+5. Rails
 
 SETUP INSTRUCTIONS
 1. Create a local copy of the git respository [https://github.com/dennisadriano18/RubyOnRails.git]
