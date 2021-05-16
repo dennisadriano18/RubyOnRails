@@ -58,24 +58,11 @@ TESTING WITH CURL
    b.) curl -i -H "Accept: application/json" -H "Content-Type: application/json; charset=utf-8" -X POST -d '{"id":1}'  http://localhost:3000/delete
    c.) curl -i -H "Accept: application/json" -H "Content-Type: application/json; charset=utf-8" -X POST -d '{"start_date": "2021-05-15 22:45:00", "end_date": "2021-05-17 22:45:00", "playerlist": ["javascript2", "me"], "summary": true, "current":2}'  http://localhost:3000/read
    
+TESTING WITH RSPEC
+1. Open terminal.
+2. Go to the [TopScoreRanking] directory
+3. type rspec and run. 
+4. As per instruction, the summary(top, low, average) for specific players will be checked.
+5. Factorybot was used to create dummy information. 
 
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
