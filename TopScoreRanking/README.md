@@ -10,9 +10,10 @@ SETUP INSTRUCTIONS
 1. Create a local copy of the git respository [https://github.com/dennisadriano18/RubyOnRails.git]
 2. The main branch should have the [TopScoreRanking] project in your local.
 3. In the terminal go to the [TopScoreRanking] directory and run the following:
-   a.) bundle install 
-   b.) rails generate model player_record name:string score:integer time_entry:datetime
-   c.) rails db:migrate
+   a.) bundle install. 
+   b.) rails generate model player_record name:string score:integer time_entry:datetime.
+   c.) rails db:migrate.
+   d.) rails webpacker:install.
 4. In the [TopScoreRanking] directory, type [rails server]. This should start up the default server 
    
 SUPPORTED OPERATIONS - [This API accepts json requests and responds in json format.]
