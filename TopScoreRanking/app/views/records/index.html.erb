@@ -20,7 +20,6 @@
   function fndelete() {
       var jsonRequest = $('#request_delete').val();
       var obj = JSON.parse(jsonRequest);
-      alert(obj.id)
       $.post({
           url: "/delete",
           type: "POST",
